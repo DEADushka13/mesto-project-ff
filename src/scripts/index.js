@@ -1,7 +1,9 @@
-import '../pages/index.css'; // добавьте импорт главного файла стилей 
+import "../pages/index.css"; // добавьте импорт главного файла стилей
 // import './cards.js';
+import "../components/profile-edit.js";
 
-import {initialCards} from './cards.js';
+import { initialCards } from "./cards.js";
+// import * as modal from '../components/modal-window.js';
 // @todo: Темплейт карточки
 const cardTemplate = document.querySelector("#card-template").content;
 
