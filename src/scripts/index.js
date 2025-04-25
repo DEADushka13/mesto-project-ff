@@ -3,7 +3,8 @@ import "../pages/index.css"; // добавьте импорт главного �
 import "../components/profile-edit.js";
 import "../components/new-card.js";
 import "../components/open-card-img.js";
-import "../components/close-popup.js";
+import "../components/close-popup.js";//ТУТ НЕ НАДО ВСЁ
+import "../components/open-popup.js";
 
 import { initialCards } from "./cards.js";
 // import * as modal from '../components/modal-window.js';
