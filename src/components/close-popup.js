@@ -7,14 +7,10 @@ popup.forEach(function (el) {
       el.classList.remove("popup_is-opened");
       // alert(card_img.classList);
     }
-
-    //закрытие, когда кликаешь не по контенту
-    // if (!evt.target.classList.contains("popup__content")) {
-    //   el.classList.remove("popup_is-opened");
-    //   // alert(card_img.classList);
-    // }
   });
 });
+
+// popup.forEach(close_withinclick,close_esc);
 
 export function close_withinclick(el) {
   const popup_content = el.querySelector(".popup__content");
@@ -28,7 +24,7 @@ export function close_withinclick(el) {
 
 export function close_esc(el) {
   el.addEventListener("keydown", function (evt) {
-    evt.preventDefault();
+    // evt.preventDefault();
     if (evt.key === "Escape") {
       el.classList.remove("popup_is-opened");
     }

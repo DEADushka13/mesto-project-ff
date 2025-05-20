@@ -13,12 +13,6 @@ edit_form.elements.description.value = document.querySelector(
   ".profile__description"
 ).textContent;
 //-------------------------------------------------------
-
-// const edit_input_name = document.forms.edit_profile.name;
-// edit_input_name.addEventListener("keydown", function () {
-//   console.log("Ураааа");
-// });
-
 // Находим форму в DOM
 const formElement = document.querySelector(".popup_type_edit"); // Воспользуйтесь методом querySelector()
 // Находим поля формы в DOM
@@ -38,10 +32,10 @@ function handleFormSubmit(evt) {
   document.querySelector(".profile__title").textContent = nameInput.value;
   document.querySelector(".profile__description").textContent = jobInput.value;
   // Вставьте новые значения с помощью textContent
-  console.log("Ураааа");
   formElement.classList.remove("popup_is-opened");
 }
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener("submit", handleFormSubmit);
+//-------------------------------------------------------
