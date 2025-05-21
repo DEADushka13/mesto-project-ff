@@ -3,7 +3,7 @@ import "../pages/index.css"; // добавьте импорт главного �
 import "../components/profile-edit.js";
 import "../components/new-card.js";
 import "../components/open-card-img.js";
-import "../components/close-popup.js";//ТУТ НЕ НАДО ВСЁ
+import "../components/close-popup.js"; //ТУТ НЕ НАДО ВСЁ
 import "../components/open-popup.js";
 
 import { initialCards } from "./cards.js";
@@ -15,7 +15,7 @@ const cardTemplate = document.querySelector("#card-template").content;
 const cardNew = document.querySelector(".places__list");
 
 // @todo: Функция создания карточки
-export const createCard = function (card, deleteCard) {
+export const createCard = function (card, deleteCard, likeCard) {
   // клонируем
   const cardElem = cardTemplate.querySelector(".card").cloneNode(true);
   //наполняем
@@ -25,8 +25,10 @@ export const createCard = function (card, deleteCard) {
   cardImg.alt = card.name;
   //кнопка удаления текущей карточки
   const deleteButton = cardElem.querySelector(".card__delete-button");
+  const likeButton = cardElem.querySelector(".card__like-button");
   //следим и удаляем
   deleteCard(cardElem, deleteButton);
+  likeCard(likeButton);
   return cardElem;
 };
 
@@ -37,12 +39,22 @@ export const deleteCard = function (cardElem, deleteButton) {
   });
 };
 
+export const likeCard = function (likeButton) {
+  likeButton.addEventListener("click", function () {
+    if (likeButton.classList.contains("card__like-button_is-active")) {
+      likeButton.classList.remove("card__like-button_is-active");
+    } else {
+      likeButton.classList.add("card__like-button_is-active");
+    }
+  });
+};
+
 // @todo: Вывести карточки на страницу
-const renderCard = function (card, deleteCard) {
-  const newCard = createCard(card, deleteCard);
+const renderCard = function (card, deleteCard, likeCard) {
+  const newCard = createCard(card, deleteCard, likeCard);
   cardNew.prepend(newCard);
 };
 
 initialCards.forEach(function (item) {
-  renderCard(item, deleteCard);
+  renderCard(item, deleteCard, likeCard);
 });
