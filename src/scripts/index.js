@@ -13,9 +13,9 @@ const cardTemplate = document.querySelector("#card-template").content;
 
 // @todo: DOM узлы
 const cardNew = document.querySelector(".places__list");
-
+const card_img = document.querySelector(".popup_type_image");
 // @todo: Функция создания карточки
-export const createCard = function (card, deleteCard, likeCard) {
+export const createCard = function (card, deleteCard, likeCard, openImg) {
   // клонируем
   const cardElem = cardTemplate.querySelector(".card").cloneNode(true);
   //наполняем
@@ -29,6 +29,8 @@ export const createCard = function (card, deleteCard, likeCard) {
   //следим и удаляем
   deleteCard(cardElem, deleteButton);
   likeCard(likeButton);
+  openImg(cardImg);
+
   return cardElem;
 };
 
@@ -49,12 +51,23 @@ export const likeCard = function (likeButton) {
   });
 };
 
+export const openImg = function (cardImg) {
+  cardImg.addEventListener("click", function (evt) {
+    if (evt.target.classList.contains("card__image")) {
+      const popImg = card_img.querySelector(".popup__image");
+      const popCaption = card_img.querySelector(".popup__caption");
+      popImg.src = cardImg.src;
+      popCaption.textContent = cardImg.alt;
+    }
+  });
+};
+
 // @todo: Вывести карточки на страницу
-const renderCard = function (card, deleteCard, likeCard) {
-  const newCard = createCard(card, deleteCard, likeCard);
+const renderCard = function (card, deleteCard, likeCard, openImg) {
+  const newCard = createCard(card, deleteCard, likeCard, openImg);
   cardNew.prepend(newCard);
 };
 
 initialCards.forEach(function (item) {
-  renderCard(item, deleteCard, likeCard);
+  renderCard(item, deleteCard, likeCard, openImg);
 });

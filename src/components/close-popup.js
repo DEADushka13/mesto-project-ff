@@ -23,7 +23,7 @@ export function close_withinclick(el) {
 }
 
 export function close_esc(el) {
-  el.addEventListener("keydown", function (evt) {
+  document.addEventListener("keydown", function (evt) {
     // evt.preventDefault();
     if (evt.key === "Escape") {
       el.classList.remove("popup_is-opened");
