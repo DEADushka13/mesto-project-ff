@@ -1,9 +1,4 @@
-import "./new-card";
-import { openImg } from "./open-card-img";
-import { initialCards } from "./current-cards.js";
-
 const cardTemplate = document.querySelector("#card-template").content;
-const cardNew = document.querySelector(".places__list");
 
 //Создать карточку
 export const createCard = function (card, deleteCard, likeCard, openImg) {
@@ -21,7 +16,6 @@ export const createCard = function (card, deleteCard, likeCard, openImg) {
   deleteCard(cardElem, deleteButton);
   likeCard(likeButton);
   openImg(cardImg);
-  cardNew.prepend(cardElem);
   return cardElem;
 };
 
@@ -42,14 +36,3 @@ export const likeCard = function (likeButton) {
     }
   });
 };
-
-//Вывести карточку на страницу
-const renderCard = function (card, deleteCard, likeCard, openImg) {
-  const newCard = createCard(card, deleteCard, likeCard, openImg);
-  cardNew.prepend(newCard);
-};
-
-//Рендерим текущие карточки
-initialCards.forEach(function (item) {
-  renderCard(item, deleteCard, likeCard, openImg);
-});
