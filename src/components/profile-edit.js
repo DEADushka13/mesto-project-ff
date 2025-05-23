@@ -14,7 +14,7 @@ export function currentProfile(edit_form) {
 }
 
 //Обработчик нажатия submit
-export function handleFormSubmit(evt) {
+export function handleEditFormSubmit(evt) {
   evt.preventDefault();
   document.querySelector(".profile__title").textContent = nameInput.value;
   document.querySelector(".profile__description").textContent = jobInput.value;
