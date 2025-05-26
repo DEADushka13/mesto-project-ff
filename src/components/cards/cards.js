@@ -1,21 +1,31 @@
 const cardTemplate = document.querySelector("#card-template").content;
 
-//Создать карточку
-export const createCard = function (card, deleteCard, likeCard, openImg) {
+//Функция создания карточки
+export const createCard = function (
+  card,
+  deleteCard,
+  likeCard,
+  onOpenImagePopup
+) {
   // клонируем
   const cardElem = cardTemplate.querySelector(".card").cloneNode(true);
   //наполняем
-  const cardImg = cardElem.querySelector(".card__image");
+  const cardImageContainer = cardElem.querySelector(".card__image");
   cardElem.querySelector(".card__title").textContent = card.name;
-  cardImg.src = card.link;
-  cardImg.alt = card.name;
+  cardImageContainer.src = card.link;
+  cardImageContainer.alt = card.name;
+  //открываем, если нажали
+  cardImageContainer.addEventListener("click", () => {
+    onOpenImagePopup(cardImageContainer);
+  });
   //кнопка удаления текущей карточки
   const deleteButton = cardElem.querySelector(".card__delete-button");
+  //кнопка лайка текущей карточки
   const likeButton = cardElem.querySelector(".card__like-button");
   //следим и удаляем
   deleteCard(cardElem, deleteButton);
+  //следим и лайкаем
   likeCard(likeButton);
-  openImg(cardImg);
   return cardElem;
 };
 
@@ -36,3 +46,30 @@ export const likeCard = function (likeButton) {
     }
   });
 };
+
+export const initialCards = [
+  {
+    name: "Архыз",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+  },
+  {
+    name: "Челябинская область",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+  },
+  {
+    name: "Иваново",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+  },
+  {
+    name: "Камчатка",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+  },
+  {
+    name: "Холмогорский район",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+  },
+  {
+    name: "Байкал",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+  },
+];
