@@ -2,15 +2,14 @@ import "./pages/index.css";
 import {
   createCard,
   deleteCard,
-  likeCard,
-  initialCards,
-} from "./components/cards/cards.js";
+  likeCard
+} from "./components/cards/card.js";
 import {
   closePopup,
   openPopup,
   closePopupWithinBoundaries,
 } from "./components/modal.js";
-// import { initialCards } from "./components/cards/current-cards.js";
+import { initialCards } from "./components/cards/cards.js";
 // Закрытие модальных окон
 const popupList = document.querySelectorAll(".popup");
 // Анимация модальных окон
@@ -30,8 +29,8 @@ const cardList = document.querySelector(".places__list");
 //Редактирование профиля
 const nameInput = document.querySelector(".popup__input_type_name");
 const jobInput = document.querySelector(".popup__input_type_description");
-let currentProfileTitle = document.querySelector(".profile__title");
-let currentProfileDescription = document.querySelector(".profile__description");
+const currentProfileTitle = document.querySelector(".profile__title");
+const currentProfileDescription = document.querySelector(".profile__description");
 const formEdit = document.forms.edit_profile;
 const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
