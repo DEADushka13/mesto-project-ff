@@ -7,7 +7,9 @@ import {
 } from "./components/modal.js";
 import { initialCards } from "./components/cards/cards.js";
 import { enableValidation, clearValidation } from "./components/validation.js";
+import { getUserInfo } from "./components/api.js";
 
+const profileImage = document.querySelector(".profile__image");
 const popupList = document.querySelectorAll(".popup");
 const newCardPopup = document.querySelector(".popup_type_new-card");
 const popupFullCardImage = document.querySelector(".popup_type_image");
@@ -158,4 +160,7 @@ editButton.addEventListener("click", function () {
   openPopup(editPopup);
 });
 
+// -----------------------------------------
+// -----------------API---------------------
+getUserInfo(currentProfileTitle, currentProfileDescription,profileImage);
 // -----------------------------------------
