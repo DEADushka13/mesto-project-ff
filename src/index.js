@@ -201,7 +201,6 @@ Promise.all([getUserInfo(), getGroupCard()]).then(([dataProfile, cards]) => {
     // card.link = cardData.link;
     // card.likes = cardData.likes;
     renderCard(cardData, deleteCard, likeCard, openImagePopup);
-    console.log(cardData);
   });
 });
 // -----------------------------------------

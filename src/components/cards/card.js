@@ -14,7 +14,6 @@ export const createCard = function (
   const countLikesContainer = cardElem.querySelector(".card__likes");
 
   const countLikes = card.likes.length;
-  console.log(countLikes);
   countLikesContainer.textContent = countLikes;
 
   cardElem.querySelector(".card__title").textContent = card.name;
