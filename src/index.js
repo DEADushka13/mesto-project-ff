@@ -7,7 +7,7 @@ import {
 } from "./components/modal.js";
 import { initialCards } from "./components/cards/cards.js";
 import { enableValidation, clearValidation } from "./components/validation.js";
-import { getUserInfo, getGroupCard } from "./components/api.js";
+import { getUserInfo, getGroupCard, patchUserInfo } from "./components/api.js";
 
 const profileImage = document.querySelector(".profile__image");
 const popupList = document.querySelectorAll(".popup");
@@ -94,9 +94,13 @@ export function openPopupEditProfile(edit_form) {
 //Обработчик нажатия submit
 export function handleEditFormSubmit(evt) {
   evt.preventDefault();
-  currentProfileTitle.textContent = nameInput.value;
-  currentProfileDescription.textContent = jobInput.value;
-  closePopup(editPopup);
+  const name = nameInput.value;
+  const about = jobInput.value;
+  patchUserInfo(name, about).then((profileData) => {
+    currentProfileTitle.textContent = profileData.name;
+    currentProfileDescription.textContent = profileData.about;
+    closePopup(editPopup);
+  });
 }
 
 popupList.forEach(function (popup) {
