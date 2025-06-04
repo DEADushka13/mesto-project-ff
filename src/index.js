@@ -7,7 +7,7 @@ import {
 } from "./components/modal.js";
 import { initialCards } from "./components/cards/cards.js";
 import { enableValidation, clearValidation } from "./components/validation.js";
-import { getUserInfo } from "./components/api.js";
+import { getUserInfo, getGroupCard } from "./components/api.js";
 
 const profileImage = document.querySelector(".profile__image");
 const popupList = document.querySelectorAll(".popup");
@@ -81,9 +81,9 @@ const renderCard = function (card, deleteCard, likeCard, openImagePopup) {
 };
 
 //Рендерим текущие карточки
-initialCards.forEach(function (item) {
-  renderCard(item, deleteCard, likeCard, openImagePopup);
-});
+// initialCards.forEach(function (item) {
+//   renderCard(item, deleteCard, likeCard, openImagePopup);
+// });
 
 export function openPopupEditProfile(edit_form) {
   edit_form.elements.name.value = currentProfileTitle.textContent;
@@ -162,5 +162,29 @@ editButton.addEventListener("click", function () {
 
 // -----------------------------------------
 // -----------------API---------------------
-getUserInfo(currentProfileTitle, currentProfileDescription,profileImage);
+// getUserInfo(currentProfileTitle, currentProfileDescription, profileImage);
+// const cards = Promise.all(getGroupCard());
+// console.log(cards);
+// console.log(getGroupCard());
+// Promise.all(cards).then(()=>cards.forEach(createCard(card,deleteCard, likeCard, openImagePopup)))
+
+// Promise.all(getGroupCard()).then((cards)=>{
+//   cards.forEach((cardData)=>{
+//     console.log(cardData);
+//   });
+// });
+
+Promise.all([getUserInfo(), getGroupCard()]).then(([dataProfile, cards]) => {
+  currentProfileTitle.textContent = dataProfile.name;
+  currentProfileDescription.textContent = dataProfile.about;
+  profileImage.style.backgroundImage = `url('${dataProfile.avatar}')`;
+
+  cards.forEach((cardData) => {
+    const card = {};
+    card.name = cardData.name;
+    card.link = cardData.link;
+    renderCard(card, deleteCard, likeCard, openImagePopup);
+    console.log(cardData);
+  });
+});
 // -----------------------------------------
