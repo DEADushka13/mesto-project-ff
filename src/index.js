@@ -70,10 +70,11 @@ function handleNewCardFormSubmit(evt) {
   const name = placeNameInput.value;
   const link = pictureUrlInput.value;
   postNewCard(name, link).then((cardData) => {
-    const card = {};
-    card.name = cardData.name;
-    card.link = cardData.link;
-    renderCard(card, deleteCard, likeCard, openImagePopup);
+    // const card = {};
+    // card.name = cardData.name;
+    // card.link = cardData.link;
+    // card.likes = cardData.likes;
+    renderCard(cardData, deleteCard, likeCard, openImagePopup);
   });
   // renderCard(card, deleteCard, likeCard, openImagePopup);
   placeNameInput.value = "";
@@ -195,10 +196,11 @@ Promise.all([getUserInfo(), getGroupCard()]).then(([dataProfile, cards]) => {
   profileImage.style.backgroundImage = `url('${dataProfile.avatar}')`;
 
   cards.forEach((cardData) => {
-    const card = {};
-    card.name = cardData.name;
-    card.link = cardData.link;
-    renderCard(card, deleteCard, likeCard, openImagePopup);
+    // const card = {};
+    // card.name = cardData.name;
+    // card.link = cardData.link;
+    // card.likes = cardData.likes;
+    renderCard(cardData, deleteCard, likeCard, openImagePopup);
     console.log(cardData);
   });
 });

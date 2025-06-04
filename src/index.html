@@ -77,7 +77,7 @@
           <h3 class="popup__title">Новое место</h3>
           <form class="popup__form" name="new_place">
             <input
-            id="place-name__input"
+              id="place-name__input"
               type="text"
               name="place-name"
               class="popup__input popup__input_type_card-name"
@@ -86,7 +86,7 @@
             />
             <span class="place-name__input-error"></span>
             <input
-            id ="url-place__input"
+              id="url-place__input"
               type="url"
               name="link"
               class="popup__input popup__input_type_url"
@@ -117,7 +117,10 @@
         <button type="button" class="card__delete-button"></button>
         <div class="card__description">
           <h2 class="card__title"></h2>
-          <button type="button" class="card__like-button"></button>
+          <div class="card__like-container">
+            <button type="button" class="card__like-button"></button>
+            <span class="card__likes">0</span>
+          </div>
         </div>
       </li>
     </template>

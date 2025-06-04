@@ -11,6 +11,12 @@ export const createCard = function (
   const cardElem = cardTemplate.querySelector(".card").cloneNode(true);
   //наполняем
   const cardImageContainer = cardElem.querySelector(".card__image");
+  const countLikesContainer = cardElem.querySelector(".card__likes");
+
+  const countLikes = card.likes.length;
+  console.log(countLikes);
+  countLikesContainer.textContent = countLikes;
+
   cardElem.querySelector(".card__title").textContent = card.name;
   cardImageContainer.src = card.link;
   cardImageContainer.alt = card.name;
