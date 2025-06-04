@@ -54,3 +54,17 @@ export const patchUserInfo = (name, about) => {
     }),
   });
 };
+
+export const postNewCard = (name, link) => {
+  return request("https://nomoreparties.co/v1/wff-cohort-39/cards ", {
+    method: "POST",
+    headers: {
+      authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: name,
+      link: link,
+    }),
+  });
+};

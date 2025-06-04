@@ -7,7 +7,12 @@ import {
 } from "./components/modal.js";
 import { initialCards } from "./components/cards/cards.js";
 import { enableValidation, clearValidation } from "./components/validation.js";
-import { getUserInfo, getGroupCard, patchUserInfo } from "./components/api.js";
+import {
+  getUserInfo,
+  getGroupCard,
+  patchUserInfo,
+  postNewCard,
+} from "./components/api.js";
 
 const profileImage = document.querySelector(".profile__image");
 const popupList = document.querySelectorAll(".popup");
@@ -19,7 +24,7 @@ const cardPopupImage = popupFullCardImage.querySelector(".popup__image");
 const cardPopupCaption = popupFullCardImage.querySelector(".popup__caption");
 const placeNameInput = document.querySelector(".popup__input_type_card-name");
 const pictureUrlInput = document.querySelector(".popup__input_type_url");
-const card = {};
+// const card = {};
 const formNewCard = document.forms.new_place;
 const cardList = document.querySelector(".places__list");
 const nameInput = document.querySelector(".popup__input_type_name");
@@ -62,9 +67,15 @@ export const addCurrentImageData = function (cardImg) {
 // она никуда отправляться не будет
 function handleNewCardFormSubmit(evt) {
   evt.preventDefault();
-  card.name = placeNameInput.value;
-  card.link = pictureUrlInput.value;
-  renderCard(card, deleteCard, likeCard, openImagePopup);
+  const name = placeNameInput.value;
+  const link = pictureUrlInput.value;
+  postNewCard(name, link).then((cardData) => {
+    const card = {};
+    card.name = cardData.name;
+    card.link = cardData.link;
+    renderCard(card, deleteCard, likeCard, openImagePopup);
+  });
+  // renderCard(card, deleteCard, likeCard, openImagePopup);
   placeNameInput.value = "";
   pictureUrlInput.value = "";
   closePopup(newCardPopup);
