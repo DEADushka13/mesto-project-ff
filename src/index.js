@@ -75,15 +75,25 @@ export const addCurrentImageData = function (cardImg) {
 // она никуда отправляться не будет
 function handleNewCardFormSubmit(evt) {
   evt.preventDefault();
+  const submitNewCardButton =
+    popupFullCardImage.querySelector(".popup__button");
+  renderLoading(true, submitNewCardButton, "Сохранить");
   const name = placeNameInput.value;
   const link = pictureUrlInput.value;
-  postNewCard(name, link).then((cardData) => {
-    // const card = {};
-    // card.name = cardData.name;
-    // card.link = cardData.link;
-    // card.likes = cardData.likes;
-    renderCard(cardData, deleteCard, likeCard, openImagePopup, myId);
-  });
+  postNewCard(name, link)
+    .then((cardData) => {
+      // const card = {};
+      // card.name = cardData.name;
+      // card.link = cardData.link;
+      // card.likes = cardData.likes;
+      renderCard(cardData, deleteCard, likeCard, openImagePopup, myId);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderLoading(false, submitNewCardButton, "Сохранить");
+    });
   // renderCard(card, deleteCard, likeCard, openImagePopup);
   placeNameInput.value = "";
   pictureUrlInput.value = "";
@@ -114,13 +124,22 @@ export function openPopupEditProfile(edit_form) {
 //Обработчик нажатия submit
 export function handleEditFormSubmit(evt) {
   evt.preventDefault();
+  const submitProfileButton = editPopup.querySelector(".popup__button");
+  renderLoading(true, submitProfileButton, "Сохранить");
   const name = nameInput.value;
   const about = jobInput.value;
-  patchUserInfo(name, about).then((profileData) => {
-    currentProfileTitle.textContent = profileData.name;
-    currentProfileDescription.textContent = profileData.about;
-    closePopup(editPopup);
-  });
+  patchUserInfo(name, about)
+    .then((profileData) => {
+      currentProfileTitle.textContent = profileData.name;
+      currentProfileDescription.textContent = profileData.about;
+      closePopup(editPopup);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderLoading(false, submitProfileButton, "Сохранить");
+    });
 }
 
 popupList.forEach(function (popup) {
@@ -202,10 +221,7 @@ Promise.all([getUserInfo(), getGroupCard()]).then(([dataProfile, cards]) => {
   });
 });
 // ---------------AVATAR--------------------
-// name="avatar-edit__form"
 // const avatarEditPopup = document.querySelector(".popup_type_avatar");
-// profile__image-edit-button
-// popup_type_edit-avatar
 
 avatarEditButton.addEventListener("click", function () {
   openPopup(avatarEditPopup);
@@ -215,23 +231,34 @@ avatarEditFormElement.addEventListener("submit", handleAvatarFormSubmit);
 function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
 
-  // const submitButton = avatarEditFormElement.querySelector(".popup__button");
-  // renderLoading(true, submitButton, "Сохранить");
+  const submitAvatarButton =
+    avatarEditFormElement.querySelector(".popup__button");
+  renderLoading(true, submitAvatarButton, "Сохранить");
 
   const avatarUrl = avatarUrlInput.value;
 
-  patchAvatar(avatarUrl).then((userData) => {
-    profileImage.style.backgroundImage = `url(${userData.avatar})`;
-    closePopup(avatarEditPopup);
-    avatarEditFormElement.reset();
-    clearValidation(avatarEditFormElement, validationConfig);
-  });
-  // .catch((err) => {
-  //   console.error(`Ошибка при обновлении аватара: ${err}`);
-  // })
-  // .finally(() => {
-  //   renderLoading(false, submitButton, "Сохранить");
-  // });
+  patchAvatar(avatarUrl)
+    .then((userData) => {
+      profileImage.style.backgroundImage = `url(${userData.avatar})`;
+      closePopup(avatarEditPopup);
+      avatarEditFormElement.reset();
+      clearValidation(avatarEditFormElement, validationConfig);
+    })
+    .catch((err) => {
+      console.error(`Ошибка при обновлении аватара: ${err}`);
+    })
+    .finally(() => {
+      renderLoading(false, submitAvatarButton, "Сохранить");
+    });
 }
 
+// -----------------------------------------
+//---------------LOADING--------------------
+function renderLoading(isLoading, buttonElement, defaultButtonText) {
+  if (isLoading) {
+    buttonElement.textContent = "Сохранение...";
+  } else {
+    buttonElement.textContent = defaultButtonText;
+  }
+}
 // -----------------------------------------
