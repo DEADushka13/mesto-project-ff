@@ -75,8 +75,7 @@ export const addCurrentImageData = function (cardImg) {
 // она никуда отправляться не будет
 function handleNewCardFormSubmit(evt) {
   evt.preventDefault();
-  const submitNewCardButton =
-    popupFullCardImage.querySelector(".popup__button");
+  const submitNewCardButton = newCardPopup.querySelector(".popup__button");
   renderLoading(true, submitNewCardButton, "Сохранить");
   const name = placeNameInput.value;
   const link = pictureUrlInput.value;
@@ -89,7 +88,7 @@ function handleNewCardFormSubmit(evt) {
       renderCard(cardData, deleteCard, likeCard, openImagePopup, myId);
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     })
     .finally(() => {
       renderLoading(false, submitNewCardButton, "Сохранить");
@@ -135,7 +134,7 @@ export function handleEditFormSubmit(evt) {
       closePopup(editPopup);
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     })
     .finally(() => {
       renderLoading(false, submitProfileButton, "Сохранить");
@@ -245,7 +244,7 @@ function handleAvatarFormSubmit(evt) {
       clearValidation(avatarEditFormElement, validationConfig);
     })
     .catch((err) => {
-      console.error(`Ошибка при обновлении аватара: ${err}`);
+      console.error(err);
     })
     .finally(() => {
       renderLoading(false, submitAvatarButton, "Сохранить");

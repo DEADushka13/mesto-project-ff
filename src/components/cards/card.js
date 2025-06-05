@@ -33,7 +33,6 @@ export const createCard = function (
   //следим и удаляем
   const owner = card.owner;
   const cardId = card._id;
-  console.log(owner);
 
   if (owner._id !== myId) {
     deleteButton.remove();

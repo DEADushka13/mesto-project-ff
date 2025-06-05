@@ -12,6 +12,14 @@
 //     console.log(result);
 //   });
 
+const config = {
+  baseUrl: "https://nomoreparties.co/v1/wff-cohort-39",
+  headers: {
+    authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
+    "Content-Type": "application/json",
+  },
+};
+
 function checkResponse(res) {
   if (res.ok) {
     return res.json();
@@ -19,35 +27,28 @@ function checkResponse(res) {
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-export function request(url, options) {
-  // принимает два аргумента: урл и объект опций, как и `fetch`
-  return fetch(url, options).then(checkResponse);
+export async function request(url, options) {
+  const res = await fetch(url, options);
+  return checkResponse(res);
 }
 
 //GET PROFILE
 export function getUserInfo() {
-  return request("https://nomoreparties.co/v1/wff-cohort-39/users/me", {
-    headers: {
-      authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
-    },
+  return request(`${config.baseUrl}/users/me`, {
+    headers: config.headers,
   });
 }
 
 export function getGroupCard() {
-  return request("https://nomoreparties.co/v1/wff-cohort-39/cards", {
-    headers: {
-      authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
-    },
+  return request(`${config.baseUrl}/cards`, {
+    headers: config.headers,
   });
 }
 
 export const patchUserInfo = (name, about) => {
-  return request("https://nomoreparties.co/v1/wff-cohort-39/users/me", {
+  return request(`${config.baseUrl}/users/me`, {
     method: "PATCH",
-    headers: {
-      authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify({
       name: name,
       about: about,
@@ -56,12 +57,9 @@ export const patchUserInfo = (name, about) => {
 };
 
 export const postNewCard = (name, link) => {
-  return request("https://nomoreparties.co/v1/wff-cohort-39/cards ", {
+  return request(`${config.baseUrl}/cards`, {
     method: "POST",
-    headers: {
-      authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify({
       name: name,
       link: link,
@@ -70,48 +68,30 @@ export const postNewCard = (name, link) => {
 };
 
 export const deleteCardApi = (cardId) => {
-  return request(`https://nomoreparties.co/v1/wff-cohort-39/cards/${cardId}`, {
+  return request(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
-    headers: {
-      authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
   });
 };
 
 export const likeCardApi = (cardId) => {
-  return request(
-    `https://nomoreparties.co/v1/wff-cohort-39/cards/likes/${cardId}`,
-    {
-      method: "PUT",
-      headers: {
-        authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  return request(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "PUT",
+    headers: config.headers,
+  });
 };
 
 export const unlikeCardApi = (cardId) => {
-  return request(
-    `https://nomoreparties.co/v1/wff-cohort-39/cards/likes/${cardId}`,
-    {
-      method: "DELETE",
-      headers: {
-        authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  return request(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  });
 };
 
 export const patchAvatar = (avatarUrl) => {
-  return request(`https://nomoreparties.co/v1/wff-cohort-39/users/me/avatar`, {
+  return request(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
-    headers: {
-      authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify({
       avatar: avatarUrl,
     }),
