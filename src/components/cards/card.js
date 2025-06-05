@@ -1,4 +1,4 @@
-import { deleteCardApi } from "../api.js";
+import { deleteCardApi, likeCardApi, unlikeCardApi } from "../api.js";
 
 const cardTemplate = document.querySelector("#card-template").content;
 
@@ -42,7 +42,7 @@ export const createCard = function (
   }
 
   //следим и лайкаем
-  likeCard(likeButton);
+  likeCard(likeButton, cardId, card.likes, myId);
   return cardElem;
 };
 
@@ -54,12 +54,17 @@ export const deleteCard = function (cardId, deleteButton) {
 };
 
 //Функция-обработчик события лайка
-export const likeCard = function (likeButton) {
+export const likeCard = function (likeButton, cardId, likes, myId) {
+  if (likes.some((like) => like._id === myId)) {
+    likeButton.classList.add("card__like-button_is-active");
+  }
   likeButton.addEventListener("click", function () {
     if (likeButton.classList.contains("card__like-button_is-active")) {
       likeButton.classList.remove("card__like-button_is-active");
+      unlikeCardApi(cardId);
     } else {
       likeButton.classList.add("card__like-button_is-active");
+      likeCardApi(cardId);
     }
   });
 };
