@@ -12,6 +12,7 @@ import {
   getGroupCard,
   patchUserInfo,
   postNewCard,
+  patchAvatar,
 } from "./components/api.js";
 
 const profileImage = document.querySelector(".profile__image");
@@ -37,7 +38,13 @@ const formEdit = document.forms.edit_profile;
 const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
 const closeButtons = document.querySelectorAll(".popup__close");
-
+// Avatar
+const avatarEditPopup = document.querySelector(".popup_type_edit-avatar");
+const avatarEditFormElement = avatarEditPopup.querySelector(".popup__form");
+const avatarUrlInput = avatarEditFormElement.querySelector(
+  ".popup__input_type_url"
+);
+const avatarEditButton = document.querySelector(".profile__image-edit-button");
 //Кнопка закрытия
 popupList.forEach(function (el) {
   el.addEventListener("click", function (evt) {
@@ -51,6 +58,7 @@ popupList.forEach(function (el) {
 editPopup.classList.add("popup_is-animated");
 newCardPopup.classList.add("popup_is-animated");
 popupFullCardImage.classList.add("popup_is-animated");
+avatarEditPopup.classList.add("popup_is-animated");
 //--------------------------------------------------------------------
 //передача данных картинки
 export const addCurrentImageData = function (cardImg) {
@@ -193,4 +201,37 @@ Promise.all([getUserInfo(), getGroupCard()]).then(([dataProfile, cards]) => {
     renderCard(cardData, deleteCard, likeCard, openImagePopup, myId);
   });
 });
+// ---------------AVATAR--------------------
+// name="avatar-edit__form"
+// const avatarEditPopup = document.querySelector(".popup_type_avatar");
+// profile__image-edit-button
+// popup_type_edit-avatar
+
+avatarEditButton.addEventListener("click", function () {
+  openPopup(avatarEditPopup);
+});
+avatarEditFormElement.addEventListener("submit", handleAvatarFormSubmit);
+
+function handleAvatarFormSubmit(evt) {
+  evt.preventDefault();
+
+  // const submitButton = avatarEditFormElement.querySelector(".popup__button");
+  // renderLoading(true, submitButton, "Сохранить");
+
+  const avatarUrl = avatarUrlInput.value;
+
+  patchAvatar(avatarUrl).then((userData) => {
+    profileImage.style.backgroundImage = `url(${userData.avatar})`;
+    closePopup(avatarEditPopup);
+    avatarEditFormElement.reset();
+    clearValidation(avatarEditFormElement, validationConfig);
+  });
+  // .catch((err) => {
+  //   console.error(`Ошибка при обновлении аватара: ${err}`);
+  // })
+  // .finally(() => {
+  //   renderLoading(false, submitButton, "Сохранить");
+  // });
+}
+
 // -----------------------------------------

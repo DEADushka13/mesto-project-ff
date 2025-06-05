@@ -23,7 +23,9 @@
           <div
             class="profile__image"
             style="background-image: url(<%=require('./images/avatar.jpg')%>)"
-          ></div>
+          >
+            <button type="button" class="profile__image-edit-button"></button>
+          </div>
           <div class="profile__info">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
             <button class="profile__edit-button" type="button"></button>
@@ -64,7 +66,7 @@
               maxlength="200"
               required
             />
-            <span class="description__input-error form__input-error"></span>
+            <span class="description__input-error popup__input-error"></span>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
@@ -108,6 +110,26 @@
         </div>
       </div>
     </div>
+
+    <div class="popup popup_type_edit-avatar">
+      <div class="popup__content">
+        <button type="button" class="popup__close"></button>
+        <form class="popup__form" name="avatar-edit__form" novalidate>
+          <h2 class="popup__title popup__title-edit-avatar">Обновить аватар</h2>
+          <input
+            id="url-avatar__input"
+            type="url"
+            name="avatar"
+            class="popup__input popup__input_type_url"
+            placeholder="url картинки"
+            required
+          />
+          <span class="url-avatar__input-error popup__input-error"></span>
+          <button type="submit" class="popup__button button">Сохранить</button>
+        </form>
+      </div>
+    </div>
+
     <!-- <script src="./scripts/cards.js"></script>
 <script src="./scripts/index.js" defer></script> -->
 

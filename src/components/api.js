@@ -104,3 +104,16 @@ export const unlikeCardApi = (cardId) => {
     }
   );
 };
+
+export const patchAvatar = (avatarUrl) => {
+  return request(`https://nomoreparties.co/v1/wff-cohort-39/users/me/avatar`, {
+    method: "PATCH",
+    headers: {
+      authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      avatar: avatarUrl,
+    }),
+  });
+};
