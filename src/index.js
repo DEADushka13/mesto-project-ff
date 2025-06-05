@@ -5,7 +5,7 @@ import {
   openPopup,
   closePopupWithinBoundaries,
 } from "./components/modal.js";
-import { initialCards } from "./components/cards/cards.js";
+// import { initialCards } from "./components/cards/cards.js";
 import { enableValidation, clearValidation } from "./components/validation.js";
 import {
   getUserInfo,
@@ -74,7 +74,7 @@ function handleNewCardFormSubmit(evt) {
     // card.name = cardData.name;
     // card.link = cardData.link;
     // card.likes = cardData.likes;
-    renderCard(cardData, deleteCard, likeCard, openImagePopup);
+    renderCard(cardData, deleteCard, likeCard, openImagePopup, myId);
   });
   // renderCard(card, deleteCard, likeCard, openImagePopup);
   placeNameInput.value = "";
@@ -87,8 +87,8 @@ function handleNewCardFormSubmit(evt) {
 formNewCard.addEventListener("submit", handleNewCardFormSubmit);
 formEdit.addEventListener("submit", handleEditFormSubmit, true); //вытащил из функции открытия
 //Вывести карточку на страницу
-const renderCard = function (card, deleteCard, likeCard, openImagePopup) {
-  const newCard = createCard(card, deleteCard, likeCard, openImagePopup);
+const renderCard = function (card, deleteCard, likeCard, openImagePopup, myId) {
+  const newCard = createCard(card, deleteCard, likeCard, openImagePopup, myId);
   cardList.prepend(newCard);
 };
 
@@ -178,19 +178,9 @@ editButton.addEventListener("click", function () {
 
 // -----------------------------------------
 // -----------------API---------------------
-// getUserInfo(currentProfileTitle, currentProfileDescription, profileImage);
-// const cards = Promise.all(getGroupCard());
-// console.log(cards);
-// console.log(getGroupCard());
-// Promise.all(cards).then(()=>cards.forEach(createCard(card,deleteCard, likeCard, openImagePopup)))
-
-// Promise.all(getGroupCard()).then((cards)=>{
-//   cards.forEach((cardData)=>{
-//     console.log(cardData);
-//   });
-// });
-
+let myId;
 Promise.all([getUserInfo(), getGroupCard()]).then(([dataProfile, cards]) => {
+  myId = dataProfile._id;
   currentProfileTitle.textContent = dataProfile.name;
   currentProfileDescription.textContent = dataProfile.about;
   profileImage.style.backgroundImage = `url('${dataProfile.avatar}')`;
@@ -200,7 +190,7 @@ Promise.all([getUserInfo(), getGroupCard()]).then(([dataProfile, cards]) => {
     // card.name = cardData.name;
     // card.link = cardData.link;
     // card.likes = cardData.likes;
-    renderCard(cardData, deleteCard, likeCard, openImagePopup);
+    renderCard(cardData, deleteCard, likeCard, openImagePopup, myId);
   });
 });
 // -----------------------------------------

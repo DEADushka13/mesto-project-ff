@@ -1,3 +1,5 @@
+import { deleteCardApi } from "../api.js";
+
 const cardTemplate = document.querySelector("#card-template").content;
 
 //Функция создания карточки
@@ -5,7 +7,8 @@ export const createCard = function (
   card,
   deleteCard,
   likeCard,
-  onOpenImagePopup
+  onOpenImagePopup,
+  myId
 ) {
   // клонируем
   const cardElem = cardTemplate.querySelector(".card").cloneNode(true);
@@ -28,16 +31,25 @@ export const createCard = function (
   //кнопка лайка текущей карточки
   const likeButton = cardElem.querySelector(".card__like-button");
   //следим и удаляем
-  deleteCard(cardElem, deleteButton);
+  const owner = card.owner;
+  const cardId = card._id;
+  console.log(owner);
+
+  if (owner._id !== myId) {
+    deleteButton.remove();
+  } else {
+    deleteCard(cardId, deleteButton);
+  }
+
   //следим и лайкаем
   likeCard(likeButton);
   return cardElem;
 };
 
 //Функция-обработчик события удаления
-export const deleteCard = function (cardElem, deleteButton) {
+export const deleteCard = function (cardId, deleteButton) {
   deleteButton.addEventListener("click", function () {
-    cardElem.remove();
+    deleteCardApi(cardId);
   });
 };
 

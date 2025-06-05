@@ -68,3 +68,13 @@ export const postNewCard = (name, link) => {
     }),
   });
 };
+
+export const deleteCardApi = (cardId) => {
+  return request(`https://nomoreparties.co/v1/wff-cohort-39/cards/${cardId}`, {
+    method: "DELETE",
+    headers: {
+      authorization: "579f6f72-d3f4-4c7c-9a95-861c3605b176",
+      "Content-Type": "application/json",
+    },
+  });
+};
