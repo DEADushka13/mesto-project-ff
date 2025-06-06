@@ -37,7 +37,8 @@ export const createCard = function (
   if (owner._id !== myId) {
     deleteButton.remove();
   } else {
-    deleteCard(cardId, deleteButton);
+    const cardToDelete = cardElem;
+    deleteCard(cardId, deleteButton, cardToDelete);
   }
 
   //следим и лайкаем
@@ -46,9 +47,15 @@ export const createCard = function (
 };
 
 //Функция-обработчик события удаления
-export const deleteCard = function (cardId, deleteButton) {
+export const deleteCard = function (cardId, deleteButton, cardElem) {
   deleteButton.addEventListener("click", function () {
-    deleteCardApi(cardId);
+    deleteCardApi(cardId)
+      .then(() => {
+        cardElem.remove();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   });
 };
 

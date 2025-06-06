@@ -71,11 +71,13 @@ const setEventListeners = (
     });
 
     if (isFormValid) {
-      submitButton.disabled = false;
-      submitButton.classList.remove(validationConfig.inactiveButtonClass);
+      disabledButton(submitButton, false, validationConfig);
+      // submitButton.disabled = false;
+      // submitButton.classList.remove(validationConfig.inactiveButtonClass);
     } else {
-      submitButton.disabled = true;
-      submitButton.classList.add(validationConfig.inactiveButtonClass);
+      disabledButton(submitButton, true, validationConfig);
+      // submitButton.disabled = true;
+      // submitButton.classList.add(validationConfig.inactiveButtonClass);
     }
   };
 
@@ -115,7 +117,13 @@ export function clearValidation(formElement, validationConfig) {
   const submitButton = formElement.querySelector(
     validationConfig.submitButtonSelector
   );
-  submitButton.disabled = true;
+  disabledButton(submitButton, true, validationConfig);
+  // submitButton.disabled = true;
+  // submitButton.classList.add(validationConfig.inactiveButtonClass);
+}
+
+function disabledButton(submitButton, isDisabled, validationConfig) {
+  submitButton.disabled = isDisabled;
   submitButton.classList.add(validationConfig.inactiveButtonClass);
 }
 
