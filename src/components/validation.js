@@ -118,3 +118,18 @@ export function clearValidation(formElement, validationConfig) {
   submitButton.disabled = true;
   submitButton.classList.add(validationConfig.inactiveButtonClass);
 }
+
+export function validateRegex(inputElement, regex, errorMessage) {
+  if (regex.test(inputElement.value)) {
+    return null;
+  } else {
+    return errorMessage;
+  }
+}
+
+export function validateText(inputElement) {
+  const regex = /^[a-zA-Zа-яА-ЯёЁ \-]+$/;
+  const errorMessage =
+    "Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы";
+  return validateRegex(inputElement, regex, errorMessage);
+}

@@ -6,7 +6,12 @@ import {
   closePopupWithinBoundaries,
 } from "./components/modal.js";
 // import { initialCards } from "./components/cards/cards.js";
-import { enableValidation, clearValidation } from "./components/validation.js";
+import {
+  enableValidation,
+  clearValidation,
+  validateRegex,
+  validateText,
+} from "./components/validation.js";
 import {
   getUserInfo,
   getGroupCard,
@@ -18,6 +23,7 @@ import {
 const profileImage = document.querySelector(".profile__image");
 const popupList = document.querySelectorAll(".popup");
 const newCardPopup = document.querySelector(".popup_type_new-card");
+const newCardForm = newCardPopup.querySelector(".popup__form");
 const popupFullCardImage = document.querySelector(".popup_type_image");
 const editPopup = document.querySelector(".popup_type_edit");
 const editPopupFormElement = editPopup.querySelector(".popup__form");
@@ -86,6 +92,10 @@ function handleNewCardFormSubmit(evt) {
       // card.link = cardData.link;
       // card.likes = cardData.likes;
       renderCard(cardData, deleteCard, likeCard, openImagePopup, myId);
+      placeNameInput.value = "";
+      pictureUrlInput.value = "";
+      closePopup(newCardPopup);
+      clearValidation(newCardForm, validationConfig);
     })
     .catch((err) => {
       console.error(err);
@@ -94,9 +104,6 @@ function handleNewCardFormSubmit(evt) {
       renderLoading(false, submitNewCardButton, "Сохранить");
     });
   // renderCard(card, deleteCard, likeCard, openImagePopup);
-  placeNameInput.value = "";
-  pictureUrlInput.value = "";
-  closePopup(newCardPopup);
 }
 
 // Прикрепляем обработчик к форме:
@@ -178,21 +185,6 @@ customValidations.set(nameInput, validateText);
 customValidations.set(jobInput, validateText);
 customValidations.set(placeNameInput, validateText);
 
-function validateRegex(inputElement, regex, errorMessage) {
-  if (regex.test(inputElement.value)) {
-    return null;
-  } else {
-    return errorMessage;
-  }
-}
-
-function validateText(inputElement) {
-  const regex = /^[a-zA-Zа-яА-ЯёЁ \-]+$/;
-  const errorMessage =
-    "Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы";
-  return validateRegex(inputElement, regex, errorMessage);
-}
-
 enableValidation(validationConfig, customValidations);
 
 editButton.addEventListener("click", function () {
@@ -205,20 +197,22 @@ editButton.addEventListener("click", function () {
 // -----------------------------------------
 // -----------------API---------------------
 let myId;
-Promise.all([getUserInfo(), getGroupCard()]).then(([dataProfile, cards]) => {
-  myId = dataProfile._id;
-  currentProfileTitle.textContent = dataProfile.name;
-  currentProfileDescription.textContent = dataProfile.about;
-  profileImage.style.backgroundImage = `url('${dataProfile.avatar}')`;
+Promise.all([getUserInfo(), getGroupCard()])
+  .then(([dataProfile, cards]) => {
+    myId = dataProfile._id;
+    currentProfileTitle.textContent = dataProfile.name;
+    currentProfileDescription.textContent = dataProfile.about;
+    profileImage.style.backgroundImage = `url('${dataProfile.avatar}')`;
 
-  cards.forEach((cardData) => {
-    // const card = {};
-    // card.name = cardData.name;
-    // card.link = cardData.link;
-    // card.likes = cardData.likes;
-    renderCard(cardData, deleteCard, likeCard, openImagePopup, myId);
-  });
-});
+    cards.forEach((cardData) => {
+      // const card = {};
+      // card.name = cardData.name;
+      // card.link = cardData.link;
+      // card.likes = cardData.likes;
+      renderCard(cardData, deleteCard, likeCard, openImagePopup, myId);
+    });
+  })
+  .catch((err) => console.error(err));
 // ---------------AVATAR--------------------
 // const avatarEditPopup = document.querySelector(".popup_type_avatar");
 
