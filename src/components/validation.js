@@ -8,19 +8,19 @@ const isValid = (
   validationConfig,
   customValidation
 ) => {
-  if (!inputElement.validity.valid) {
-    showInputError(
-      formElement,
-      inputElement,
-      validationConfig,
-      inputElement.validationMessage
-    );
-  } else if (customValidation && customValidation(inputElement)) {
+  if (customValidation && customValidation(inputElement)) {
     showInputError(
       formElement,
       inputElement,
       validationConfig,
       customValidation(inputElement)
+    );
+  } else if (!inputElement.validity.valid) {
+    showInputError(
+      formElement,
+      inputElement,
+      validationConfig,
+      inputElement.validationMessage
     );
   } else {
     hideInputError(formElement, inputElement, validationConfig);

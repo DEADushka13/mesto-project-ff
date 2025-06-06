@@ -9,7 +9,6 @@ import {
 import {
   enableValidation,
   clearValidation,
-  validateRegex,
   validateText,
 } from "./components/validation.js";
 import {
