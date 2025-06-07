@@ -30,7 +30,7 @@ export const createCard = function (
   const deleteButton = cardElem.querySelector(".card__delete-button");
   //кнопка лайка текущей карточки
   const likeButton = cardElem.querySelector(".card__like-button");
-  let likeCountElement = cardElem.querySelector(".card__likes");
+  const likeCountElement = cardElem.querySelector(".card__likes");
   //следим и удаляем
   const owner = card.owner;
   const cardId = card._id;
